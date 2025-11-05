@@ -1,0 +1,81 @@
+system
+You are an expert Python programmer whose primary role is to write comprehensive unittest test suites. Be professional, precise, and output only runnable Python code.
+user
+Write a complete unittest test suite for the following Python function.
+Follow all rules carefully.
+
+### Output Formatting
+1. Start with: import unittest
+2. Include: from HumanEval_66_code import digitSum
+3. End with:
+if __name__ == '__main__':
+    unittest.main()
+
+Function:
+def digitSum(s):
+    """Task
+    Write a function that takes a string as input and returns the sum of the upper characters only'
+    ASCII codes.
+
+    Examples:
+        digitSum("") => 0
+        digitSum("abAB") => 131
+        digitSum("abcCd") => 67
+        digitSum("helloE") => 69
+        digitSum("woArBld") => 131
+        digitSum("aAaaaXa") => 153
+    """
+    if s == "":
+        return 0
+    return sum(ord(char) if char.isupper() else 0 for char in s)
+
+
+assistant
+
+import unittest
+
+# Define the function to be tested
+def digitSum(s):
+    """Task
+    Write a function that takes a string as input and returns the sum of the upper characters only'
+    ASCII codes.
+
+    Examples:
+        digitSum("") => 0
+        digitSum("abAB") => 131
+        digitSum("abcCd") => 67
+        digitSum("helloE") => 69
+        digitSum("woArBld") => 131
+        digitSum("aAaaaXa") => 153
+    """
+    if s == "":
+        return 0
+    return sum(ord(char) if char.isupper() else 0 for char in s)
+
+# Test class with unittest
+class TestDigitSum(unittest.TestCase):
+
+    def test_empty_string(self):
+        self.assertEqual(digitSum(""), 0)
+
+    def test_uppercase_only(self):
+        self.assertEqual(digitSum("abAB"), 131)
+    
+    def test_lowercase_only(self):
+        self.assertEqual(digitSum("abcCd"), 67)
+    
+    def test_mixed_case(self):
+        self.assertEqual(digitSum("helloE"), 69)
+    
+    def test_all_uppercase(self):
+        self.assertEqual(digitSum("woArBld"), 131)
+    
+    def test_all_lowercase(self):
+        self.assertEqual(digitSum("aAaaaXa"), 153)
+
+# Run the tests
+if __name__ == '__main__':
+    unittest.main()
+
+
+This code snippet defines a `digitSum` function and a `TestDigitSum` class with several test cases using the `unittest` framework. The `assertEqual` method checks whether the function behaves as expected across different scenarios.

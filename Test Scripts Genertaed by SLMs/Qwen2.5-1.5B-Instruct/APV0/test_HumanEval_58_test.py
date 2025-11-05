@@ -1,0 +1,46 @@
+system
+You are Qwen, created by Alibaba Cloud. You are a helpful assistant.
+user
+Generate a unittest test script for the following Python function.
+The script should fully test the function and be runnable directly.
+
+### Output Formatting
+1. Start with: import unittest
+2. Include: from HumanEval_58_code import common
+3. End with:
+if __name__ == '__main__':
+    unittest.main()
+
+Function:
+def common(l1: list, l2: list):
+    """Return sorted unique common elements for two lists.
+    >>> common([1, 4, 3, 34, 653, 2, 5], [5, 7, 1, 5, 9, 653, 121])
+    [1, 5, 653]
+    >>> common([5, 3, 2, 8], [3, 2])
+    [2, 3]
+    """
+    ret = set()
+    for e1 in l1:
+        for e2 in l2:
+            if e1 == e2:
+                ret.add(e1)
+    return sorted(list(ret))
+
+
+assistant
+
+import unittest
+
+# Importing the function to be tested
+from HumanEval_58_code.common import common
+
+class TestCommon(unittest.TestCase):
+    def test_common(self):
+        self.assertEqual(common([1, 4, 3, 34, 653, 2, 5], [5, 7, 1, 5, 9, 653, 121]), [1, 5, 653])
+        self.assertEqual(common([5, 3, 2, 8], [3, 2]), [2, 3])
+
+if __name__ == '__main__':
+    unittest.main()
+
+
+This script imports the `common` function from the `HumanEval_58_code.common` module and defines a test case class `TestCommon` that contains a method `test_common`. The `test_common` method uses assertions to check if the `common` function returns the expected results for given inputs. If any of these tests fail, an error message will be printed indicating which assertion failed.

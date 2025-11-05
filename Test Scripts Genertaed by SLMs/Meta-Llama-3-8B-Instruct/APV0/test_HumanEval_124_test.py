@@ -1,0 +1,82 @@
+user
+
+Generate a unittest test script for the following Python function.
+The script should fully test the function and be runnable directly.
+
+### Output Formatting
+1. Start with: import unittest
+2. Include: from HumanEval_124_code import valid_date
+3. End with:
+if __name__ == '__main__':
+    unittest.main()
+
+Function:
+def valid_date(date):
+    """You have to write a function which validates a given date string and
+    returns True if the date is valid otherwise False.
+    The date is valid if all of the following rules are satisfied:
+    1. The date string is not empty.
+    2. The number of days is not less than 1 or higher than 31 days for months 1,3,5,7,8,10,12. And the number of days is not less than 1 or higher than 30 days for months 4,6,9,11. And, the number of days is not less than 1 or higher than 29 for the month 2.
+    3. The months should not be less than 1 or higher than 12.
+    4. The date should be in the format: mm-dd-yyyy
+
+    for example: 
+    valid_date('03-11-2000') => True
+    valid_date('15-01-2012') => False
+    valid_date('04-0-2040') => False
+    valid_date('06-04-2020') => True
+    valid_date('06/04/2020') => False
+    """
+    try:
+        date = date.strip()
+        month, day, year = date.split('-')
+        month, day, year = int(month), int(day), int(year)
+        if month < 1 or month > 12:
+            return False
+        if month in [1, 3, 5, 7, 8, 10, 12] and (day < 1 or day > 31):
+            return False
+        if month in [4, 6, 9, 11] and (day < 1 or day > 30):
+            return False
+        if month == 2 and (day < 1 or day > 29):
+            return False
+    except:
+        return False
+    return Trueassistant
+
+Here is the unittest test script for the `valid_date` function:
+
+
+import unittest
+from HumanEval_124_code import valid_date
+
+class TestValidDate(unittest.TestCase):
+    def test_valid_date(self):
+        self.assertTrue(valid_date('03-11-2000'))
+        self.assertFalse(valid_date('15-01-2012'))
+        self.assertFalse(valid_date('04-0-2040'))
+        self.assertTrue(valid_date('06-04-2020'))
+        self.assertFalse(valid_date('06/04/2020'))  # This test will fail because the function is not handling the '/' character
+
+    def test_invalid_date(self):
+        self.assertFalse(valid_date(''))
+        self.assertFalse(valid_date('abc'))
+        self.assertFalse(valid_date('02-29-2000'))  # February only has 29 days in a leap year
+        self.assertFalse(valid_date('13-12-2000'))  # Month cannot be greater than 12
+        self.assertFalse(valid_date('02-30-2000'))  # February only has 29 days
+
+    def test_edge_cases(self):
+        self.assertTrue(valid_date('01-01-2000'))
+        self.assertTrue(valid_date('12-31-2000'))
+        self.assertTrue(valid_date('02-28-2000'))  # February has 28 days in a non-leap year
+
+if __name__ == '__main__':
+    unittest.main()
+
+
+This test script includes three test cases:
+
+1. `test_valid_date`: Tests the function with valid and invalid dates.
+2. `test_invalid_date`: Tests the function with invalid dates.
+3. `test_edge_cases`: Tests the function with edge cases, such as dates at the beginning or end of the month.
+
+Note that the test script does not cover all possible edge cases, but it should give you a good starting point for testing the `valid_date` function.

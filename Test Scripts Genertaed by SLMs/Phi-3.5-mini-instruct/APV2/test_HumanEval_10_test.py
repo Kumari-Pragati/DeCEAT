@@ -1,0 +1,79 @@
+You are an expert Python programmer whose primary role is to write comprehensive unittest test suites. Be professional, precise, and output only runnable Python code. Write a complete unittest test suite for the following Python function. 
+Follow all rules carefully.
+
+### Output Formatting
+1. Start with: import unittest
+2. Include: from HumanEval_10_code import make_palindrome
+3. End with:
+if __name__ == '__main__':
+    unittest.main()
+
+Function:
+def is_palindrome(string: str) -> bool:
+    """ Test if given string is a palindrome """
+    return string == string[::-1]
+
+
+def make_palindrome(string: str) -> str:
+    """ Find the shortest palindrome that begins with a supplied string.
+    Algorithm idea is simple:
+    - Find the longest postfix of supplied string that is a palindrome.
+    - Append to the end of the string reverse of a string prefix that comes before the palindromic suffix.
+    >>> make_palindrome('')
+    ''
+    >>> make_palindrome('cat')
+    'catac'
+    >>> make_palindrome('cata')
+    'catac'
+    """
+    if not string:
+        return ''
+
+    beginning_of_suffix = 0
+
+    while not is_palindrome(string[beginning_of_suffix:]):
+        beginning_of_suffix += 1
+
+    return string + string[:beginning_of_suffix][::-1]
+
+ 
+import unittest
+from HumanEval_10_code import make_palindrome
+
+class TestMakePalindrome(unittest.TestCase):
+
+    def test_make_palindrome_empty_string(self):
+        self.assertEqual(make_palindrome(''), '')
+
+    def test_make_palindrome_single_character(self):
+        self.assertEqual(make_palindrome('c'), 'c')
+
+    def test_make_palindrome_already_palindrome(self):
+        self.assertEqual(make_palindrome('aba'), 'aba')
+
+    def test_make_palindrome_non_palindrome(self):
+        self.assertEqual(make_palindrome('cat'), 'catac')
+
+    def test_make_palindrome_multiple_characters(self):
+        self.assertEqual(make_palindrome('race'), 'racecar')
+
+    def test_make_palindrome_longer_string(self):
+        self.assertEqual(make_palindrome('aibohphobia'), 'aibohphobiai')
+
+    def test_make_palindrome_with_spaces(self):
+        self.assertEqual(make_palindrome('a b c'), 'abcba')
+
+    def test_make_palindrome_with_special_characters(self):
+        self.assertEqual(make_palindrome('!@#$%^&*'), '!@#$%^&*!@#$%^&*')
+
+    def test_make_palindrome_with_numbers(self):
+        self.assertEqual(make_palindrome('123'), '123321')
+
+    def test_make_palindrome_with_mixed_case(self):
+        self.assertEqual(make_palindrome('AbC'), 'AbCcba')
+
+if __name__ == '__main__':
+    unittest.main()
+
+
+This test suite covers a variety of cases for the `make_palindrome` function, including empty strings, single characters, strings that are already palindromes, non-palindromic strings, strings with multiple characters, strings with spaces, strings with special characters, strings with numbers, and strings with mixed case. Each test case uses the `assertEqual` method to verify that the output of `make_palindrome` matches the expected result. Running this test suite will execute all the tests and report any failures.

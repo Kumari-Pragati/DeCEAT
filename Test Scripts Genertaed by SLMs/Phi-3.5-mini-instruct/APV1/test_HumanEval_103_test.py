@@ -1,0 +1,61 @@
+You are an expert Python programmer. 
+Your task is to write a comprehensive unittest test suite for the given Python function.
+
+### Output Formatting
+1. Start with: import unittest
+2. Include: from HumanEval_103_code import rounded_avg
+3. End with:
+if __name__ == '__main__':
+    unittest.main()
+
+Function:
+def rounded_avg(n, m):
+    """You are given two positive integers n and m, and your task is to compute the
+    average of the integers from n through m (including n and m). 
+    Round the answer to the nearest integer and convert that to binary.
+    If n is greater than m, return -1.
+    Example:
+    rounded_avg(1, 5) => "0b11"
+    rounded_avg(7, 5) => -1
+    rounded_avg(10, 20) => "0b1111"
+    rounded_avg(20, 33) => "0b11010"
+    """
+
+    if m < n:
+        return -1
+    summation = 0
+    for i in range(n, m + 1):
+        summation += i
+    return bin(round(summation / (m - n + 1)))
+
+ import unittest
+from HumanEval_103_code import rounded_avg
+
+class TestRoundedAverage(unittest.TestCase):
+
+    def test_rounded_avg_with_positive_integers(self):
+        self.assertEqual(rounded_avg(1, 5), "0b11")
+        self.assertEqual(rounded_avg(10, 20), "0b1111")
+        self.assertEqual(rounded_avg(20, 33), "0b11010")
+
+    def test_rounded_avg_with_n_greater_than_m(self):
+        self.assertEqual(rounded_avg(7, 5), -1)
+
+    def test_rounded_avg_with_n_equal_to_m(self):
+        self.assertEqual(rounded_avg(5, 5), "0b10")
+
+    def test_rounded_avg_with_n_and_m_equal(self):
+        self.assertEqual(rounded_avg(1, 1), "0b1")
+
+    def test_rounded_avg_with_zero(self):
+        self.assertEqual(rounded_avg(0, 5), "0b101")
+        self.assertEqual(rounded_avg(5, 0), "0b101")
+
+    def test_rounded_avg_with_negative_integers(self):
+        with self.assertRaises(ValueError):
+            rounded_avg(-1, 5)
+        with self.assertRaises(ValueError):
+            rounded_avg(5, -1)
+
+if __name__ == '__main__':
+    unittest.main()
