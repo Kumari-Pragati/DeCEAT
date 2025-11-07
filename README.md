@@ -1,7 +1,7 @@
-# 🧠 DeCEAT:  Decoding Carbon Emissions of AI-driven Testing
+# 🧠 DeCEAT: Decoding Carbon Emissions of AI-driven Testing
 
 This repository contains the complete experimental framework, datasets, and metric resources developed for the paper  
-**“ DeCEAT:Decoding Carbon Emissions of AI-driven Testing”**.  
+**“DeCEAT: Decoding Carbon Emissions of AI-driven Testing”**.  
 
 DeCEAT is a sustainability-aware framework that quantifies the trade-offs between **energy efficiency**, **carbon emissions**, **test coverage quality**, and **execution time** in small language models (SLMs).  
 It integrates structured prompt engineering, emission tracking via **CodeCarbon**, and unified sustainability metrics for transparent and reproducible analysis.
@@ -37,7 +37,7 @@ The setup employed the following libraries and tools:
 - **CodeCarbon** → for energy and emission tracking  
 - **tqdm**, **pandas**, **coverage.py** → for runtime monitoring, data handling, and coverage computation  
 
-**Carbon intensity factor (I)** represents the 12-month average value for *Alberta, Canada*, obtained from **ElectricityMaps**, ensuring realistic emission calculations.
+**Carbon intensity factor (I)** represents the 12-month average value for *Alberta, Canada*, obtained from **[Electricity Maps](https://app.electricitymaps.com/map/live/fifteen_minutes)**, ensuring realistic emission calculations.
 
 ---
 
@@ -52,8 +52,8 @@ The setup employed the following libraries and tools:
 | Tracking tool | CodeCarbon |
 
 **Quantization Scheme**  
-- **8-bit Quantization** → *Phi-3.5-mini* and *Qwen 2.5-1.5B*  
-- **4-bit Quantization** → *DeepSeek-Coder-7B*, *Mistral-7B*, *Llama-3-8B*
+- **8-bit Quantization** → *Phi-3.5-mini-instruct* and *Qwen2.5-1.5B-Instruct*  
+- **4-bit Quantization** → *deepseek-coder-7b-instruct-v1.5*, *Mistral-7B-Instruct-v0.3*, *Meta-Llama-3-8B-Instruct*
 
 All models were executed under identical generation parameters to ensure fairness across all adaptive prompt variants (**APV₀ – APV₃**).
 
@@ -65,7 +65,7 @@ The **DeCEAT** pipeline comprises five sequential stages that ensure reproducibi
 
 1. **Batch Execution** – Each model generates test scripts under the four prompt variants (APV₀–APV₃), producing one CodeCarbon log per variant.  
 2. **Data Consolidation** – The 20 CSV logs are merged into a unified dataset containing emission (kgCO₂), energy (kWh), execution time (s), and GPU metrics.  
-3. **Coverage Measurement** – Unit-test coverage (%) is computed using `coverage.py` and averaged across all prompt variants.  
+3. **Coverage Measurement** – Unit-test coverage (%) is computed using `coverage.py` and summarized for each model–prompt pair. Detailed results are provided in the *Test Coverage Results* folder.  
 4. **Metric Input Extraction** – The dataset yields coverage, emission (gCO₂), energy (kWh), and time (s) inputs for all primary and derived metrics.  
 5. **Evaluation Phases** – Computed inputs are used to derive both the **Primary Analysis metrics (SCI, SEI, CER)** and the **Trade-off Analysis metrics (GQI, SCV, SVI, GFβ)**.
 
@@ -77,13 +77,14 @@ This structured process ensures consistent emission factors and reproducible sus
 
 | Folder / File | Description |
 |:--|:--|
-| **`/CSV Files/`** | 20 CodeCarbon CSV logs generated for each model–prompt combination (APV₀–APV₃ × 5 models). Each records energy, emission, and runtime metrics. |
-| **`/Code File/`** | Two reference notebooks (`APV₀_8bit.ipynb`, `APV₃_4bit.ipynb`). All other models follow the same structure — only model name and quantization settings change. |
+| **`/CSV Files/`** | Contains 20 CodeCarbon CSV logs generated for each model–prompt combination (APV₀–APV₃ × 5 models). Each records energy, emission, and runtime metrics. |
+| **`/Code File/`** | Includes two reference notebooks (`APV₀_8bit.ipynb`, `APV₃_4bit.ipynb`). All other models follow the same structure — only model name and quantization settings change. |
 | **`/HumanEval_Integrated_Dataset/`** | Merged dataset of 164 Python tasks combining docstring definitions, canonical solutions, and entry points into runnable functions. |
 | **`/Prompts/`** | Four prompt PDFs (`APV₀` to `APV₃`) illustrating incremental prompt complexity and feature addition. |
 | **`/Test_Scripts_Generated_by_SLMs/`** | Five subfolders (one per SLM) containing test scripts generated under all four prompt variants. |
+| **`/Test Coverage Results/`** | Contains 20 `.txt` files — one for each model–prompt combination (APV₀–APV₃ × 5 models). Each file lists the detailed test coverage statistics for 164 HumanEval tasks, including total executed tests, passed tests, and coverage percentages (e.g., 87% coverage summary). |
 | **`Entropic_Prompt_Structure_Image.png`** | Visualization of the Anthropic-style prompt engineering pattern followed throughout DeCEAT. |
-| **`Master_Sheet_For_All_Metrics.xlsx`** | Complete metric calculation sheet with formulas and values for SCI, SEI, CER, GQI, SVI, GFβ. |
+| **`Master_Sheet_For_All_Metrics.xlsx`** | Complete metric calculation sheet with formulas and computed values for SCI, SEI, CER, GQI, SVI, and GFβ. |
 | **`LICENSE`** | MIT License. |
 | **`README.md`** | Project documentation (this file). |
 
@@ -91,7 +92,7 @@ This structured process ensures consistent emission factors and reproducible sus
 
 ## 📊 Metric Computation
 
-Metric computations are derived from the processed CodeCarbon logs.  
+Metric computations are derived from the processed CodeCarbon logs and coverage results.  
 Two constants are maintained throughout:
 - **I** → Grid carbon intensity (gCO₂ / kWh)  
 - **R = 5** → Number of code files per batch  
@@ -107,17 +108,15 @@ Two constants are maintained throughout:
 - **SVI** – Sustainable Velocity Index  
 - **GFβ** – Green F-Beta Score for eco-efficiency and quality trade-off (β ∈ {0.3, 0.6, 0.9, 1.2, 1.5, 1.8})
 
-All formulae, normalization steps, and complete calculation workflows are available in the Excel master sheet for reproducibility.
+The coverage reports stored in **Test Coverage Results** complement emission data to provide a holistic assessment of efficiency and accuracy trade-offs.  
+All formulae, normalization steps, and complete computation workflows are detailed in the Excel master sheet.
 
 ---
 
 ## 🧪 Reproducibility
 
-Each model–prompt variant produces one CSV log per run, yielding a total of 20 logs (5 models × 4 prompts).  
-Each log captures 33 executions per prompt variant, providing granularity for averaging and metric computation.  
-The merged dataset, along with the Excel metric sheet, ensures **full transparency and replicability** of the sustainability analysis.
+Each model–prompt variant produces one CSV log and one coverage result file, yielding a total of 40 experimental outputs (20 emission CSVs + 20 coverage reports).  
+Each record captures energy, runtime, and test performance across **33 executions per prompt variant**, providing sufficient granularity for averaging and metric computation.  
+The merged dataset and master Excel sheet ensure **complete transparency and reproducibility** of the sustainability analysis.
 
 ---
-
-
-
