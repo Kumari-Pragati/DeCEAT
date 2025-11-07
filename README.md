@@ -1,7 +1,7 @@
 # 🧠 DeCEAT:  Decoding Carbon Emissions of AI-driven Testing
 
 This repository contains the complete experimental framework, datasets, and metric resources developed for the paper  
-**“Sustainable Prompt Engineering for Automated Test Generation with Small Language Models (AST 2026 Submission)”**.  
+**“ DeCEAT:Decoding Carbon Emissions of AI-driven Testing”**.  
 
 DeCEAT — *Decoding Carbon Emissions of AI-driven Testing* — is a sustainability-aware framework that quantifies the trade-offs between **energy efficiency**, **carbon emissions**, **test coverage quality**, and **execution time** in small language models (SLMs).  
 It integrates structured prompt engineering, emission tracking via **CodeCarbon**, and unified sustainability metrics for transparent and reproducible analysis.
