@@ -82,7 +82,7 @@ This structured process ensures consistent emission factors and reproducible sus
 | **`/HumanEval_Integrated_Dataset/`** | Merged dataset of 164 Python tasks combining docstring definitions, canonical solutions, and entry points into runnable functions. |
 | **`/Prompts/`** | Four prompt PDFs (`APV₀` to `APV₃`) illustrating incremental prompt complexity and feature addition. |
 | **`/Test_Scripts_Generated_by_SLMs/`** | Five subfolders (one per SLM) containing test scripts generated under all four prompt variants. |
-| **`/Test Coverage Results/`** | Contains 20 `.txt` files — one for each model–prompt combination (APV₀–APV₃ × 5 models). Each file lists the detailed test coverage statistics for 164 HumanEval tasks, including total executed tests, passed tests, and coverage percentages (e.g., 87% coverage summary). |
+| **`/Test Coverage Results/`** | Contains 20 `.txt` files — one for each model–prompt combination (APV₀–APV₃ × 5 models). Each file lists the detailed test coverage statistics for 164 HumanEval tasks, including total executed tests, passed tests, and coverage percentages (e.g., total % coverage summary). |
 | **`Entropic_Prompt_Structure_Image.png`** | Visualization of the Anthropic-style prompt engineering pattern followed throughout DeCEAT. |
 | **`Master_Sheet_For_All_Metrics.xlsx`** | Complete metric calculation sheet with formulas and computed values for SCI, SEI, CER, GQI, SVI, and GFβ. |
 | **`LICENSE`** | MIT License. |
