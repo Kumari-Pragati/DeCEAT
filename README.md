@@ -23,7 +23,7 @@ Each record in HumanEval includes:
 | `test` | Human-written assertion-based unit tests |
 | `entry_point` | Callable name of the function to be tested |
 
-The **Test Script Generation** phase focuses on the systematic creation of unit tests by SLMs based on structured prompts and prepared data modules.  
+The **Test Script Generation** phase focuses on the systematic creation of unit tests by SLMs based on different prompts and prepared data modules.  
 All models are instantiated under various quantization schemes to maximize efficiency and minimize the computational footprint during inference.
 
 ---
